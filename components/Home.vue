@@ -16,7 +16,7 @@
           {{ userInitials }}
         </a-avatar>
         <a-modal v-model:visible="isUserModalVisible" title="Switch User" @ok="switchUser" @cancel="hideUserModal">
-          <a-select v-model="selectedUser" placeholder="Select a user" style="width: 100%;">
+          <a-select v-model="selectedUserTemp.id" placeholder="Select a user" style="width: 100%;">
             <a-select-option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</a-select-option>
           </a-select>
         </a-modal>
@@ -48,17 +48,19 @@ export default {
       ],
       currentView: 'ContentGenerationPage',
       isUserModalVisible: false,
-      selectedUser: null,
+      selectedUser: 1, // Default to the first user
+      selectedUserTemp: { id: 1, name: 'User A' }, // Initialize with the current selected user
       users: [
-        { id: 1, name: 'User A' },
-        { id: 2, name: 'User B' },
-        { id: 3, name: 'User C' }
+        { id: 1, name: 'A' },
+        { id: 2, name: 'B' },
+        { id: 3, name: 'C' }
       ]
     };
   },
   computed: {
     userInitials() {
-      return this.selectedUser ? this.users.find(user => user.id === this.selectedUser).name.slice(0, 2).toUpperCase() : 'US';
+      const user = this.users.find(user => user.id === this.selectedUser);
+      return user ? user.name.slice(0, 2).toUpperCase() : 'US';
     }
   },
   methods: {
@@ -67,13 +69,16 @@ export default {
     },
     showUserModal() {
       this.isUserModalVisible = true;
+      this.selectedUserTemp = { ...this.users.find(user => user.id === this.selectedUser) }; // Set the temporary user to current user
     },
     hideUserModal() {
       this.isUserModalVisible = false;
     },
     switchUser() {
-      console.log('Switching to user with ID:', this.selectedUser);
+      // Update the selected user based on the modal input
+      this.selectedUser = this.selectedUserTemp.id;
       this.isUserModalVisible = false;
+      console.log('Switched to user with ID:', this.selectedUser);
     }
   }
 };
@@ -91,19 +96,5 @@ html, body, #app {
   color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-}
-
-.nav-item {
-  transition: box-shadow 0.3s ease-in-out, background 0.3s;
-  padding: 12px;
-  border-radius: 8px;
-  color: #2e3440;
-  min-width: 320px;
-}
-
-.nav-item:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(135deg, #eceff4, #e5e9f0);
-  color: #2e3440;
 }
 </style>

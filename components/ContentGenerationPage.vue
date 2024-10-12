@@ -94,14 +94,22 @@ export default {
         { name: 'Long-tail Keywords', keywords: [], newKeyword: '' }
       ],
       historyData: [
-        {
-          id: 123,
-          batchName: 'Batch1',
-          generateTime: '2024-10-11 23:00:00',
-          numOfArticles: 39,
-          publishedArticles: 27
-        }
-      ]
+        { id: 1, batchName: 'Batch 1', generateTime: '2024-10-01 10:00', numOfArticles: 5, publishedArticles: 3 },
+        { id: 2, batchName: 'Batch 2', generateTime: '2024-10-02 11:00', numOfArticles: 10, publishedArticles: 7 },
+        { id: 3, batchName: 'Batch 3', generateTime: '2024-10-03 09:30', numOfArticles: 8, publishedArticles: 5 },
+        { id: 4, batchName: 'Batch 4', generateTime: '2024-10-04 12:00', numOfArticles: 6, publishedArticles: 4 },
+        { id: 5, batchName: 'Batch 5', generateTime: '2024-10-05 14:20', numOfArticles: 12, publishedArticles: 10 },
+        { id: 6, batchName: 'Batch 6', generateTime: '2024-10-06 15:45', numOfArticles: 9, publishedArticles: 6 },
+        { id: 7, batchName: 'Batch 7', generateTime: '2024-10-07 08:10', numOfArticles: 7, publishedArticles: 5 },
+        { id: 8, batchName: 'Batch 8', generateTime: '2024-10-08 16:30', numOfArticles: 11, publishedArticles: 8 },
+        { id: 9, batchName: 'Batch 9', generateTime: '2024-10-09 10:15', numOfArticles: 13, publishedArticles: 11 },
+        { id: 10, batchName: 'Batch 10', generateTime: '2024-10-10 09:00', numOfArticles: 14, publishedArticles: 12 },
+        { id: 11, batchName: 'Batch 11', generateTime: '2024-10-11 14:00', numOfArticles: 15, publishedArticles: 13 },
+        { id: 12, batchName: 'Batch 12', generateTime: '2024-10-12 11:50', numOfArticles: 5, publishedArticles: 4 },
+        { id: 13, batchName: 'Batch 13', generateTime: '2024-10-13 13:30', numOfArticles: 8, publishedArticles: 7 },
+        { id: 14, batchName: 'Batch 14', generateTime: '2024-10-14 17:00', numOfArticles: 9, publishedArticles: 6 },
+        { id: 15, batchName: 'Batch 15', generateTime: '2024-10-15 08:45', numOfArticles: 10, publishedArticles: 9 }
+      ],
     };
   },
   methods: {
