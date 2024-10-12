@@ -4,7 +4,6 @@ import PageGenerationPage from '../components/PageGenerationPage.vue';
 import ContentDetailPage from '../components/ContentDetailPage.vue'
 import Home from '../components/Home.vue';
 
-
 const routes = [
   { path: '/', component: Home },
   { path: '/content-generation', component: ContentGenerationPage },

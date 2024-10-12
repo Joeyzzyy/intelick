@@ -14,7 +14,7 @@
           {{ userInitials }}
         </a-avatar>
         <a-modal
-          v-model:visible="isUserModalVisible"
+          v-model:open="isUserModalVisible"
           title="Switch User"
           @ok="switchUser"
           @cancel="hideUserModal"
@@ -49,13 +49,6 @@
           >
             {{ item.title }}
           </a-menu-item>
-          <a-menu-item
-            v-for="(item, index) in bottomNavItems"
-            :key="item.view"
-            :class="{ 'nav-item--active': currentView === item.view }"
-          >
-            {{ item.title }}
-          </a-menu-item>
         </a-menu>
       </div>
     </a-layout-sider>
@@ -84,7 +77,6 @@ html, body, #app {
 import PageGenerationPage from './PageGenerationPage.vue';
 import ContentGenerationPage from './ContentGenerationPage.vue';
 import ContentDetailPage from './ContentDetailPage.vue';
-import { ref } from 'vue';
 
 export default {
   name: 'Home',
@@ -116,8 +108,8 @@ export default {
     }
   },
   methods: {
-    handleMenuClick(view) {
-      this.currentView = view;
+    handleMenuClick({ key }) {
+      this.currentView = key;
     },
     showUserModal() {
       this.isUserModalVisible = true;
