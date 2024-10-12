@@ -12,7 +12,7 @@
       </a-button>
       
       <!-- Table Section -->
-      <a-table :columns="columns" :dataSource="data" rowKey="id" :onRow="onRow" @row-click="onRowClick" row-selection="{ type: 'checkbox' }">
+      <a-table :columns="columns" :dataSource="data" rowKey="id" :onRow="onRow" @row-click="onRowClick" >
         <template #bodyCell="{ column, record }">
           <span v-if="column.key === 'operation'">
             <a-button type="link" @click="onRowClick(record)">
