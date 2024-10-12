@@ -15,8 +15,8 @@
         <a-avatar style="cursor: pointer; background-color: #87d068;" @click="showUserModal">
           {{ userInitials }}
         </a-avatar>
-        <a-modal v-model:visible="isUserModalVisible" title="Switch User" @ok="switchUser" @cancel="hideUserModal">
-          <a-select v-model="selectedUserTemp.id" placeholder="Select a user" style="width: 100%;">
+        <a-modal v-model:open="isUserModalVisible" title="Switch User" @ok="switchUser" @cancel="hideUserModal">
+          <a-select v-model:value="selectedUser" placeholder="Select a user" style="width: 100%;">
             <a-select-option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</a-select-option>
           </a-select>
         </a-modal>
@@ -32,6 +32,7 @@
 import PageGenerationPage from './PageGenerationPage.vue';
 import ContentGenerationPage from './ContentGenerationPage.vue';
 import ContentDetailPage from './ContentDetailPage.vue';
+import { ref } from 'vue';
 
 export default {
   name: 'Home',
@@ -48,37 +49,33 @@ export default {
       ],
       currentView: 'ContentGenerationPage',
       isUserModalVisible: false,
-      selectedUser: 1, // Default to the first user
-      selectedUserTemp: { id: 1, name: 'User A' }, // Initialize with the current selected user
+      selectedUser: '1', // Default to the first user
       users: [
-        { id: 1, name: 'A' },
-        { id: 2, name: 'B' },
-        { id: 3, name: 'C' }
+        { id: '1', name: 'A' },
+        { id: '2', name: 'B' },
+        { id: '3', name: 'C' }
       ]
     };
   },
   computed: {
     userInitials() {
       const user = this.users.find(user => user.id === this.selectedUser);
-      return user ? user.name.slice(0, 2).toUpperCase() : 'US';
+      return user ? user.name : 'Pic';
     }
   },
   methods: {
-    handleMenuClick({ key }) {
-      this.currentView = key;
+    handleMenuClick(view) {
+      this.currentView = view;
     },
     showUserModal() {
       this.isUserModalVisible = true;
-      this.selectedUserTemp = { ...this.users.find(user => user.id === this.selectedUser) }; // Set the temporary user to current user
     },
     hideUserModal() {
       this.isUserModalVisible = false;
     },
     switchUser() {
-      // Update the selected user based on the modal input
-      this.selectedUser = this.selectedUserTemp.id;
+      console.log('Switch user method called', this.selectedUser);
       this.isUserModalVisible = false;
-      console.log('Switched to user with ID:', this.selectedUser);
     }
   }
 };
