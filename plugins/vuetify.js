@@ -1,21 +1,9 @@
 import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
-import { VApp, VNavigationDrawer, VMain, VList, VListItem, VAvatar, VContainer, VRow, VCol, VCard, VCardTitle, VCardText, VDivider } from 'vuetify/components';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
 export default createVuetify({
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VMain,
-    VList,
-    VListItem,
-    VAvatar,
-    VContainer,
-    VRow,
-    VCol,
-    VCard,
-    VCardTitle,
-    VCardText,
-    VDivider,
-  },
+  components,
+  directives,
 });

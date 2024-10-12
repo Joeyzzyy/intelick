@@ -1,0 +1,173 @@
+<template>
+  <a-layout style="height: 100vh; background: #f0f2f5;">
+    <a-layout-content style="height: 100%; padding-bottom: 40px;">
+      <a-row gutter="24" style="height: 100%;">
+        <!-- Left Section: 1/4 of the width -->
+        <a-col :span="8" style="height: 100%; padding: 0 12px 0 0;">
+          <div class="left-section" style="height: 100%; overflow: auto; padding: 20px; background: #FFFFFF; border-radius: 15px; min-height: 200px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+            <h3>Content Attributes</h3>
+            <a-form layout="vertical">
+              <a-form-item label="Keywords Setting" label-col="">
+                <a-collapse bordered={false} style="background: #fafafa;">
+                  <a-collapse-panel v-for="(category, index) in keywordCategories" :key="index" :header="category.name">
+                    <a-list bordered>
+                      <a-list-item v-for="(keyword, kIndex) in category.keywords" :key="kIndex" style="padding: 10px; border-radius: 8px;">
+                        <a-checkbox v-model="keyword.selected" style="color: #5a5a5a">{{ keyword.name }}</a-checkbox>
+                        <a-space style="float: right;">
+                          <a-button type="link" icon="edit" @click="editKeyword(index, kIndex)" style="color: #1890ff;" />
+                          <a-button type="link" icon="delete" @click="deleteKeyword(index, kIndex)" style="color: #ff4d4f;" />
+                        </a-space>
+                      </a-list-item>
+                    </a-list>
+                    <a-input v-model:value="keywordCategories[index].newKeyword" placeholder="New Keyword" size="small" style="margin-top: 10px; border-radius: 8px;" />
+                    <a-button type="primary" @click="addKeyword(index)" size="small" style="margin-top: 10px; background: #1890ff; border-radius: 8px; border: none;">Add Keyword</a-button>
+                  </a-collapse-panel>
+                </a-collapse>
+              </a-form-item>
+
+              <a-form-item label="Article Type">
+                <a-select v-model="form.articleType" size="middle" mode="multiple" style="width: 100%; border-radius: 8px;">
+                  <a-select-option v-for="item in articleTypes" :key="item" :value="item">{{ item }}</a-select-option>
+                </a-select>
+              </a-form-item>
+              <a-form-item label="Average Word Count">
+                <a-input-number v-model="form.averageWordCount" size="middle" style="width: 100%; border-radius: 8px;" />
+              </a-form-item>
+              <a-form-item label="Number of Articles">
+                <a-input-number v-model="form.numberOfArticles" size="middle" style="width: 100%; border-radius: 8px;" />
+              </a-form-item>
+              <a-form-item label="Batch Name">
+                <a-input v-model="form.batchName" size="middle" style="border-radius: 8px;" />
+              </a-form-item>
+              <a-button type="primary" block style="background: linear-gradient(135deg, #1890ff, #40a9ff); border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">Submit</a-button>
+            </a-form>
+          </div>
+        </a-col>
+        <!-- Right Section: 3/4 of the width -->
+        <a-col :span="16" style="height: 100%; padding: 0;">
+          <div class="right-section" style="height: 100%; overflow: auto; padding: 20px; padding-bottom: 20px; background: #FFFFFF; border-radius: 15px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+            <h3>Content Btach List</h3>
+            <component :is="currentSubView" />
+
+            <!-- History Table -->
+            <a-table :data-source="historyData" bordered style="margin-top: 20px; border-radius: 8px;">
+              <a-table-column title="ID" dataIndex="id" key="id" />
+              <a-table-column title="Batch Name" dataIndex="batchName" key="batchName" />
+              <a-table-column title="Generate Time" dataIndex="generateTime" key="generateTime" />
+              <a-table-column title="Num. Of Articles" dataIndex="numOfArticles" key="numOfArticles" />
+              <a-table-column title="Published Articles" dataIndex="publishedArticles" key="publishedArticles" />
+              <a-table-column title="Operation" key="operation">
+                <template v-slot="scope">
+                  <a-space>
+                    <a-button type="link" @click="publishBatch(scope.record.id)" style="color: #52c41a;">Publish</a-button>
+                    <a-button type="link" @click="checkBatch(scope.record.id)" style="color: #1890ff;">Check</a-button>
+                  </a-space>
+                </template>
+              </a-table-column>
+            </a-table>
+          </div>
+        </a-col>
+      </a-row>
+    </a-layout-content>
+  </a-layout>
+</template>
+
+<script>
+export default {
+  name: 'ContentGenerationPage',
+  components: {
+  },
+  data() {
+    return {
+      form: {
+        keyword: '',
+        articleType: '',
+        averageWordCount: null,
+        numberOfArticles: null,
+        batchName: ''
+      },
+      articleTypes: ['Blog', 'News', 'Review', 'Tutorial'],
+      keywordCategories: [
+        { name: 'Target Words', keywords: [], newKeyword: '' },
+        { name: 'Core Keywords', keywords: [], newKeyword: '' },
+        { name: 'Modified Keywords', keywords: [], newKeyword: '' },
+        { name: 'Long-tail Keywords', keywords: [], newKeyword: '' }
+      ],
+      historyData: [
+        {
+          id: 123,
+          batchName: 'Batch1',
+          generateTime: '2024-10-11 23:00:00',
+          numOfArticles: 39,
+          publishedArticles: 27
+        }
+      ]
+    };
+  },
+  methods: {
+    addKeyword(categoryIndex) {
+      console.log(this.keywordCategories[categoryIndex]);
+      if (this.keywordCategories[categoryIndex].newKeyword.trim() !== '') {
+        this.keywordCategories[categoryIndex].keywords.push({
+          name: this.keywordCategories[categoryIndex].newKeyword.trim(),
+          selected: false // 默认未选中
+        });
+        this.keywordCategories[categoryIndex].newKeyword = '';
+      }
+    },
+    editKeyword(categoryIndex, keywordIndex) {
+      const newName = prompt('Edit Keyword', this.keywordCategories[categoryIndex].keywords[keywordIndex].name);
+      if (newName !== null && newName.trim() !== '') {
+        this.keywordCategories[categoryIndex].keywords[keywordIndex].name = newName.trim();
+      }
+    },
+    deleteKeyword(categoryIndex, keywordIndex) {
+      this.keywordCategories[categoryIndex].keywords.splice(keywordIndex, 1);
+    },
+    publishBatch(id) {
+      console.log('Publishing batch with ID:', id);
+    },
+    checkBatch(id) {
+      console.log('Checking batch with ID:', id);
+      this.$router.push({ path: '/content-detail', query: { id: id } });
+    }
+  }
+};
+</script>
+
+<style scoped>
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+}
+
+.left-section,
+.right-section {
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.a-layout-content {
+  height: 100%;
+}
+
+.small-input {
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.a-button-primary {
+  border-radius: 8px;
+}
+
+.a-table {
+  border-radius: 8px;
+}
+</style>
