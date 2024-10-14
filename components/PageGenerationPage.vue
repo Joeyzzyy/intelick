@@ -3,7 +3,7 @@
     <!-- 工具栏 -->
     <div style="padding: 20px; display: flex; align-items: center;">
       <!-- Deploy Pages 按钮 -->
-      <a-button type="primary" @click="deployPages">Deploy Pages</a-button>
+      <a-button type="primary" @click="deployPages">Go Deploy Pages</a-button>
       <!-- Spacer -->
       <div style="flex: 1;"></div>
       <!-- 搜索框 -->
