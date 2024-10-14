@@ -89,7 +89,7 @@ export default {
     return {
       topNavItems: [
         { title: 'Content Generation', view: 'ContentGenerationPage' },
-        { title: 'Page Generation', view: 'PageGenerationPage' }
+        { title: 'Generatde Pages', view: 'PageGenerationPage' }
       ],
       currentView: 'ContentGenerationPage',
       isUserModalVisible: false,
