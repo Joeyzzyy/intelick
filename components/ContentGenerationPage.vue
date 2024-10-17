@@ -30,8 +30,12 @@
                   <a-select-option v-for="item in articleTypes" :key="item" :value="item">{{ item }}</a-select-option>
                 </a-select>
               </a-form-item>
-              <a-form-item label="Average Word Count">
-                <a-input-number v-model="form.averageWordCount" size="middle" style="width: 100%; border-radius: 8px;" />
+              <a-form-item label="Word Count Range">
+                <div style="display: flex; align-items: center; width: 100%;">
+                  <a-input-number v-model="form.minWordCount" placeholder="Min" size="middle" style="flex: 1; border-radius: 8px;" />
+                  <span style="margin: 0 8px;">to</span>
+                  <a-input-number v-model="form.maxWordCount" placeholder="Max" size="middle" style="flex: 1; border-radius: 8px;" />
+                </div>
               </a-form-item>
               <a-form-item label="Number of Articles">
                 <a-input-number v-model="form.numberOfArticles" size="middle" style="width: 100%; border-radius: 8px;" />
@@ -39,7 +43,7 @@
               <a-form-item label="Batch Name">
                 <a-input v-model="form.batchName" size="middle" style="border-radius: 8px;" />
               </a-form-item>
-              <a-button type="primary" block style="background: linear-gradient(135deg, #1890ff, #40a9ff); border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">Submit</a-button>
+              <a-button type="primary" block @click="handleSubmit" style="background: linear-gradient(135deg, #1890ff, #40a9ff); border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">Submit</a-button>
             </a-form>
           </div>
         </a-col>
@@ -73,6 +77,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'ContentGenerationPage',
   components: {
@@ -138,6 +143,26 @@ export default {
     checkBatch(id) {
       console.log('Checking batch with ID:', id);
       this.$router.push({ path: '/content-detail', query: { id: id } });
+    },
+    handleSubmit() {
+      const payload = {
+        keyword: this.form.keyword,
+        articleType: this.form.articleType,
+        minWordCount: this.form.minWordCount,
+        maxWordCount: this.form.maxWordCount,
+        numberOfArticles: this.form.numberOfArticles,
+        batchName: this.form.batchName
+      };
+
+      axios.post('https://api.example.com/submit', payload)
+        .then(response => {
+          console.log('Form submitted successfully:', response.data);
+          // You can add additional logic here, such as showing a success message or clearing the form
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+          // Handle error, such as showing an error message to the user
+        });
     }
   }
 };
