@@ -10,13 +10,13 @@
         <h2 style="text-align: center; font-weight: bold; margin-bottom: 24px;">Intelick SEO</h2>
         <a-form layout="vertical" @submit.prevent="handleLogin">
           <a-form-item label="Username">
-            <a-input v-model="form.username" placeholder="Enter your username" size="large" style="border-radius: 8px;" />
+            <a-input v-model:value="form.username" placeholder="Enter your username" size="large" style="border-radius: 8px;" @keydown.enter="handleLogin"/>
           </a-form-item>
           <a-form-item label="Password">
-            <a-input-password v-model="form.password" placeholder="Enter your password" size="large" style="border-radius: 8px;" />
+            <a-input-password v-model:value="form.password" placeholder="Enter your password" size="large" style="border-radius: 8px;" @keydown.enter="handleLogin"/>
           </a-form-item>
           <a-form-item>
-            <a-button type="primary" block size="large" @click="handleLogin" style="background: linear-gradient(135deg, #1890ff, #40a9ff); border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+            <a-button type="primary" block size="large" @click="handleLogin" style="background: linear-gradient(135deg, #1890ff, #40a9ff); border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" >
               Login
             </a-button>
           </a-form-item>
@@ -30,6 +30,9 @@
 export default {
   name: 'LoginPage',
   data() {
+    if (localStorage.getItem('intelickIsLoggedIn')) {
+      this.$router.push('/home');
+    }
     return {
       form: {
         username: '',
@@ -39,12 +42,25 @@ export default {
   },
   methods: {
     handleLogin() {
-      // Basic login function for now
+      const { username, password } = this.form;
+      // Simulate authentication logic
       if (this.form.username && this.form.password) {
-        console.log('Logging in with:', this.form);
-        // Here you could add logic for authentication
+        if (this.form.username === 'admin' && this.form.password === 'Admin123') {
+          // Simulate successful login
+          localStorage.setItem('intelickIsLoggedIn', true);
+          this.$router.push('/home');
+        } else {
+          // Simulate failed login
+          this.$notification.error({
+            message: 'Login Error',
+            description: 'Login failed, wrong username or password'
+          });
+        }
       } else {
-        this.$message.error('Please enter both username and password');
+        this.$notification.error({
+          message: 'Login Error',
+          description: 'Please enter both username and password'
+        });
       }
     }
   }

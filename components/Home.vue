@@ -51,6 +51,10 @@
           </a-menu-item>
         </a-menu>
       </div>
+      <!-- 登出按钮 -->
+      <div style="padding: 20px; text-align: center;">
+        <a-button type="default" @click="handleLogout" style="border-radius: 8px;">Logout</a-button>
+      </div>
     </a-layout-sider>
     <!-- 内容区域 -->
     <a-layout-content style="padding: 20px; overflow: auto;">
@@ -120,7 +124,11 @@ export default {
     switchUser() {
       console.log('Switch user method called', this.selectedUser);
       this.isUserModalVisible = false;
-    }
+    },
+    handleLogout() {
+      localStorage.removeItem('intelickIsLoggedIn');
+      this.$router.push('/');
+    },
   }
 };
 </script>
