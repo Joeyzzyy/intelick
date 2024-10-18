@@ -47,7 +47,9 @@ export default {
       if (this.form.username && this.form.password) {
         if (this.form.username === 'admin' && this.form.password === 'Admin123') {
           // Simulate successful login
+          const fakeAccessToken = 'yourAccessToken123456'; 
           localStorage.setItem('intelickIsLoggedIn', true);
+          localStorage.setItem('accessToken', fakeAccessToken);
           this.$router.push('/home');
         } else {
           // Simulate failed login

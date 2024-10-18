@@ -69,6 +69,10 @@ html, body, #app {
   margin: 0;
 }
 
+.ant-layout-content {
+  overflow: hidden !important;
+}
+
 .nav-item--active {
   background: linear-gradient(135deg, #5e81ac, #81a1c1);
   color: white;
@@ -81,6 +85,7 @@ html, body, #app {
 import PageGenerationPage from './PageGenerationPage.vue';
 import ContentGenerationPage from './ContentGenerationPage.vue';
 import ContentDetailPage from './ContentDetailPage.vue';
+import apiClient from '../api/api'; // 使用相对路径引用
 
 export default {
   name: 'Home',

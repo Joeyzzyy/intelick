@@ -1,7 +1,7 @@
 <template>
-  <a-layout style="height: 100vh; background: #f0f2f5;">
+  <a-layout style="height: 100vh; background: #f0f2f5; ">
     <a-layout-content style="height: 100%; padding-bottom: 40px;">
-      <a-row gutter="24" style="height: 100%;">
+      <a-row gutter="20" style="height: 100%;">
         <!-- Left Section: 1/4 of the width -->
         <a-col :span="8" style="height: 100%; padding: 0 12px 0 0;">
           <div class="left-section" style="height: 100%; overflow: auto; padding: 20px; background: #FFFFFF; border-radius: 15px; min-height: 200px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
@@ -50,21 +50,22 @@
         <!-- Right Section: 3/4 of the width -->
         <a-col :span="16" style="height: 100%; padding: 0;">
           <div class="right-section" style="height: 100%; overflow: auto; padding: 20px; padding-bottom: 20px; background: #FFFFFF; border-radius: 15px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
-            <h3>Content Btach List</h3>
+            <h3>Content Batch List</h3>
             <component :is="currentSubView" />
 
             <!-- History Table -->
-            <a-table :data-source="historyData" bordered style="margin-top: 20px; border-radius: 8px;">
-              <a-table-column title="ID" dataIndex="id" key="id" />
-              <a-table-column title="Batch Name" dataIndex="batchName" key="batchName" />
-              <a-table-column title="Generate Time" dataIndex="generateTime" key="generateTime" />
-              <a-table-column title="Num. Of Articles" dataIndex="numOfArticles" key="numOfArticles" />
-              <a-table-column title="Published Articles" dataIndex="publishedArticles" key="publishedArticles" />
-              <a-table-column title="Operation" key="operation">
+            <a-table :data-source="historyData" bordered style="margin-top: 10px; border-radius: 5px;">
+              <a-table-column title="ID" dataIndex="id" key="id"/>
+              <a-table-column title="Title" dataIndex="batchName" key="batchName" :width="150"/>
+              <a-table-column title="Generate Time" dataIndex="generateTime" key="generateTime" :width="280"/>
+              <a-table-column title="Num." dataIndex="numOfArticles" key="numOfArticles" :width="150"/>
+              <a-table-column title="Published Num." dataIndex="publishedArticles" key="publishedArticles" :width="150"/>
+              <a-table-column title="Operation" key="operation" fixed="right" :width="100">
                 <template v-slot="scope">
                   <a-space>
                     <a-button type="link" @click="publishBatch(scope.record.id)" style="color: #52c41a;">Publish</a-button>
                     <a-button type="link" @click="checkBatch(scope.record.id)" style="color: #1890ff;">Check</a-button>
+                    <a-button type="link" @click="deleteBatch(scope.record.id)" style="color: red;">Delete</a-button>
                   </a-space>
                 </template>
               </a-table-column>
