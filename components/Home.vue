@@ -82,6 +82,7 @@ html, body, #app {
 </style>
 
 <script>
+import {ref} from 'vue';
 import PageGenerationPage from './PageGenerationPage.vue';
 import ContentGenerationPage from './ContentGenerationPage.vue';
 import ContentDetailPage from './ContentDetailPage.vue';
@@ -98,6 +99,7 @@ export default {
   },
   data() {
     return {
+      componentKey: ref(0),
       topNavItems: [
         { title: 'Content Generation', view: 'ContentGenerationPage' },
         { title: 'Link Group Setting', view: 'LinkGroupSettingPage' },
@@ -129,9 +131,24 @@ export default {
     hideUserModal() {
       this.isUserModalVisible = false;
     },
+    reloadComponent() {
+      this.componentKey += 1;
+    },
     switchUser() {
       console.log('Switch user method called', this.selectedUser);
       this.isUserModalVisible = false;
+
+      // 更新本地存储中的用户ID
+      localStorage.setItem('currentUserId', this.selectedUser);
+      
+      // 重新加载组件数据
+      this.reloadComponent();
+      
+      // 显示用户切换成功的通知
+      this.$notification.success({
+        message: 'User Switched',
+        description: `Successfully switched to ${this.userInitials}`,
+      });
     },
     handleLogout() {
       localStorage.removeItem('intelickIsLoggedIn');
