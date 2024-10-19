@@ -4,10 +4,12 @@ import PageGenerationPage from '../components/PageGenerationPage.vue';
 import ContentDetailPage from '../components/ContentDetailPage.vue'
 import Home from '../components/Home.vue';
 import LoginPage from '../components/LoginPage.vue';
+import LinkGroupSettingPage from '../components/LinkGroupSettingPage.vue';
 
 const routes = [
   { path: '/', component: LoginPage },
   { path: '/content-generation', component: ContentGenerationPage, meta: {requiresAuth: true} },
+  { path: '/link-group-setting', component: LinkGroupSettingPage, meta: {requiresAuth: true} },
   { path: '/page-generation', component: PageGenerationPage, meta: {requiresAuth: true} },
   { path: '/content-detail', component: ContentDetailPage, meta: {requiresAuth: true} },
   { path: '/login', component: LoginPage },

@@ -85,6 +85,7 @@ html, body, #app {
 import PageGenerationPage from './PageGenerationPage.vue';
 import ContentGenerationPage from './ContentGenerationPage.vue';
 import ContentDetailPage from './ContentDetailPage.vue';
+import LinkGroupSettingPage from './LinkGroupSettingPage.vue';
 import apiClient from '../api/api'; // 使用相对路径引用
 
 export default {
@@ -93,12 +94,14 @@ export default {
     PageGenerationPage,
     ContentGenerationPage,
     ContentDetailPage,
+    LinkGroupSettingPage
   },
   data() {
     return {
       topNavItems: [
         { title: 'Content Generation', view: 'ContentGenerationPage' },
-        { title: 'Generatde Pages', view: 'PageGenerationPage' }
+        { title: 'Link Group Setting', view: 'LinkGroupSettingPage' },
+        // { title: 'Generatde Pages', view: 'PageGenerationPage' }
       ],
       currentView: 'ContentGenerationPage',
       isUserModalVisible: false,
